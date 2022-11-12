@@ -43,13 +43,12 @@ class cifar10_alexnet(nn.Module):
         )
         
     def forward(self, x):
-        batch_size = 10
         x = self.feature1(x)
         x = self.feature2(x)
         x = self.feature3(x)
         x = self.feature4(x)
         x = self.feature5(x)
-        x = x.view(batch_size, -1)
+        x = x.view(-1, 256*9*9)
         x = self.classifier(x)
         return x
 
