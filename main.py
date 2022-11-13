@@ -6,7 +6,7 @@ def main(arg):
     if arg.train:
         import mylib.training.py
     elif arg.test:
-        import mylib.test.py
+        import mylib.chech_accuracy.py
 
 def parse_input():
     parser = argparse.ArgumentParser(description='description')
