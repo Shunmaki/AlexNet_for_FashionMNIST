@@ -1,1 +1,13 @@
 AlexNetによるFASHION MNISTの分類を行います。
+
+# 概要
+・cifar10データセットをAlexNetで学習
+・AlexNetはcifar10の大きさに合わせて少し変更
+・trainデータでの学習とtestデータでの評価の両方を行う
+
+# Training phase
+・"python main.py -t" を実行
+・valデータのlossが最も低いepochのパラメータを保存
+
+# Test phase
+・testデータの正解率を計算し表示
