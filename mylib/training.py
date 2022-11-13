@@ -21,6 +21,7 @@ optimizer = optim.SGD(model.parameters(), lr=0.01)
 train_loader = make_dataloader.make_train_loader()
 test_loader = make_dataloader.make_test_loader()
 
+val_min = 1e+20
 for epoch in range(num_epochs):
     train_loss, train_acc, val_loss, val_acc = 0.0, 0.0, 0.0, 0.0
     
@@ -50,17 +51,18 @@ for epoch in range(num_epochs):
     avg_val_loss = val_loss / len(test_loader.dataset)
     avg_val_acc = val_acc / len(test_loader.dataset)
     
+    if val_loss < val_min:
+        model_path = 'data/model.pth'
+        torch.save(mode.state_dict(), model_path)
+        val_min = val_loss
+    
     print ('Epoch [{}/{}], Loss: {loss:.4f}, val_loss: {val_loss:.4f}, val_acc: {val_acc:.4f}' 
                    .format(epoch+1, num_epochs, i+1, loss=avg_train_loss, val_loss=avg_val_loss, val_acc=avg_val_acc))
     train_loss_list.append(avg_train_loss)
     train_acc_list.append(avg_train_acc)
     val_loss_list.append(avg_val_loss)
     val_acc_list.append(avg_val_acc)
-
-model_path = 'data/model.pth'
-torch.save(model.state_dict(), model_path)
     
-# plot graph
 plt.figure()
 plt.plot(range(num_epochs), train_loss_list, color='blue', linestyle='-', label='train_loss')
 plt.plot(range(num_epochs), val_loss_list, color='green', linestyle='--', label='val_loss')
